@@ -6,14 +6,36 @@ var inject = function () {
     for (var i = 0; i < arguments.length; i++) {
         _params.push(dependencyContainer.resolveType(arguments[i]));
     }
+    var _createClass = function (ctor, baseClass) {
+        var _classFactory = function (locals) {
+            for (var i = 0; i < arguments.length; i++) {
+                _params.push(arguments[i]);
+            }
+
+            if (baseClass) {
+                this.base = function (params) {
+                    var wrapper = function (f, args) {
+                        return function () {
+                            f.apply(this, args);
+                        };
+                    };
+
+                    this.base = new (wrapper(baseClass, arguments))();
+                };
+            }
+            ctor.apply(this, _params);
+        };
+        return _classFactory;
+    };
+
     return {
-        class: function (ctor) {
-            return function (locals) {
-                for (var i = 0; i < arguments.length; i++) {
-                    _params.push(arguments[i]);
+        base: function (baseClass) {
+            return {
+                class: function (ctor) {
+                    return _createClass(ctor, baseClass);
                 }
-                return ctor.apply(this, _params);
-            };
-        }
+            }
+        },
+        class: _createClass
     };
 };

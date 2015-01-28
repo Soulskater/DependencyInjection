@@ -14,20 +14,25 @@
         var canvas = canvas || {};
         //Class declaration
         canvas.object = inject("jQuery", "linq").class(function ($, linq, someParam) {
+            this.baseParam = someParam;
             this.foo = function () {
-                console.log("instance foobar");
+                console.log("instance base");
             };
-
-            /*return {
-                foo: function () {
-                    console.log("object foobar");
-                }
-            }*/
         });
+
+        canvas.circle = inject("jQuery", "linq").base(canvas.object)
+                .class(function ($, linq, someParam) {
+                    //this.base(someParam);
+
+                    this.foo = function () {
+                        console.log("instance child");
+                        //console.log(this.base.baseParam);
+                    };
+                });
 
         //In use
         var someParam = "foobar";
-        var myObj = new canvas.object(someParam);
+        var myObj = new canvas.circle(someParam);
         myObj.foo();
     </script>
 </head>
