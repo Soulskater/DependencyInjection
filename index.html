@@ -9,6 +9,27 @@
     <script type="text/javascript" src="src/js/dependency/container.js"></script>
     <script type="text/javascript" src="src/js/dependency/injector.js"></script>
     <script type="text/javascript" src="src/js/registerTypes.js"></script>
+    <script>
+
+        var canvas = canvas || {};
+        //Class declaration
+        canvas.object = inject("jQuery", "linq").class(function ($, linq, someParam) {
+            this.foo = function () {
+                console.log("instance foobar");
+            };
+
+            /*return {
+                foo: function () {
+                    console.log("object foobar");
+                }
+            }*/
+        });
+
+        //In use
+        var someParam = "foobar";
+        var myObj = new canvas.object(someParam);
+        myObj.foo();
+    </script>
 </head>
 <body>
 

@@ -6,9 +6,3 @@
 //Register types
 dependencyContainer.registerType("jQuery", jQuery);
 dependencyContainer.registerType("linq", linq);
-
-
-//In use
-var canvas = injector("jQuery", "linq").class(function ($, linq) {
-    debugger;
-});
