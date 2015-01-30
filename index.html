@@ -20,7 +20,19 @@
             };
         });
 
-        canvas.circle = inject("jQuery", "linq").base(canvas.object)
+        canvas.circle = inject("jQuery", "linq")
+                .base(canvas.object)
+                .class(function ($, linq, someParam) {
+                    this.base(someParam);
+
+                    this.foo = function () {
+                        console.log("instance child");
+                        //console.log(this.base.baseParam);
+                    };
+                });
+
+        canvas.path = inject("jQuery", "linq")
+                .base(canvas.object)
                 .class(function ($, linq, someParam) {
                     //this.base(someParam);
 
@@ -32,8 +44,10 @@
 
         //In use
         var someParam = "foobar";
-        var myObj = new canvas.circle(someParam);
-        myObj.foo();
+        var circle = new canvas.circle(someParam);
+        var path = new canvas.path(someParam);
+
+        circle.foo();
     </script>
 </head>
 <body>

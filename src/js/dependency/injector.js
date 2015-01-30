@@ -6,8 +6,24 @@ var inject = function () {
     for (var i = 0; i < arguments.length; i++) {
         _params.push(dependencyContainer.resolveType(arguments[i]));
     }
-    var _createClass = function (ctor, baseClass) {
-        var _classFactory = function (locals) {
+    var _baseFactory = function (baseClass) {
+        if(typeof baseClass !== "function"){
+            throw new Error("The base function parameter should be a function, got " + typeof baseClass);
+        }
+
+        return {
+            class: function (ctor) {
+                return _classFactory(ctor, baseClass);
+            }
+        }
+    };
+    
+    var _classFactory = function (ctor, baseClass) {
+        if(typeof ctor !== "function"){
+            throw new Error("The constructor parameter should be a function, got " + typeof ctor);
+        }
+
+        var _class = function (locals) {
             for (var i = 0; i < arguments.length; i++) {
                 _params.push(arguments[i]);
             }
@@ -25,17 +41,20 @@ var inject = function () {
             }
             ctor.apply(this, _params);
         };
-        return _classFactory;
+
+        if (baseClass) {
+            _class.prototype = Object.create(baseClass.prototype);
+            _class.constructor = ctor;
+        }
+        else {
+            _class.prototype = Object.create(ctor.prototype);
+            _class.constructor = ctor;
+        }
+        return _class;
     };
 
     return {
-        base: function (baseClass) {
-            return {
-                class: function (ctor) {
-                    return _createClass(ctor, baseClass);
-                }
-            }
-        },
-        class: _createClass
+        base: _baseFactory,
+        class: _classFactory
     };
 };
