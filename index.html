@@ -26,8 +26,8 @@
                     this.base(someParam);
 
                     this.foo = function () {
+                        this.base.foo();
                         console.log("instance child");
-                        //console.log(this.base.baseParam);
                     };
                 });
 
