@@ -6,12 +6,13 @@
     <script type="text/javascript" src="packages/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="packages/linq-js/dist/linq.js"></script>
 
+    <script type="text/javascript" src="src/js/dependency/registerNamespace.js"></script>
     <script type="text/javascript" src="src/js/dependency/container.js"></script>
     <script type="text/javascript" src="src/js/dependency/injector.js"></script>
-    <script type="text/javascript" src="src/js/registerTypes.js"></script>
+    <script type="text/javascript" src="registerTypes.js"></script>
     <script>
 
-        var canvas = canvas || {};
+        registerNamespace("canvas.shapes");
         //Class declaration
         canvas.object = inject("jQuery", "linq").class(function ($, linq, someParam) {
             this.baseParam = someParam;
