@@ -217,5 +217,5 @@ pip-log.txt
 ## WebStorm
 #############
 .idea/
-dist/
+#dist/
 packages/
