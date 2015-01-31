@@ -33,8 +33,9 @@ var inject = function () {
         }
 
         var _class = function (locals) {
+            var allParams = _params.concat([]);
             for (var i = 0; i < arguments.length; i++) {
-                _params.push(arguments[i]);
+                allParams.push(arguments[i]);
             }
 
             if (baseClass) {
@@ -49,7 +50,7 @@ var inject = function () {
                     _objectExtend(this, this.base);
                 };
             }
-            ctor.apply(this, _params);
+            ctor.apply(this, allParams);
         };
 
         if (baseClass) {
