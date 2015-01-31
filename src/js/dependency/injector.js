@@ -6,8 +6,17 @@ var inject = function () {
     for (var i = 0; i < arguments.length; i++) {
         _params.push(dependencyContainer.resolveType(arguments[i]));
     }
+
+    function _objectExtend(src, dest) {
+        for (var propName in dest) {
+            if (dest.hasOwnProperty(propName)) {
+                src[propName] = dest[propName];
+            }
+        }
+    }
+
     var _baseFactory = function (baseClass) {
-        if(typeof baseClass !== "function"){
+        if (typeof baseClass !== "function") {
             throw new Error("The base function parameter should be a function, got " + typeof baseClass);
         }
 
@@ -17,9 +26,9 @@ var inject = function () {
             }
         }
     };
-    
+
     var _classFactory = function (ctor, baseClass) {
-        if(typeof ctor !== "function"){
+        if (typeof ctor !== "function") {
             throw new Error("The constructor parameter should be a function, got " + typeof ctor);
         }
 
@@ -37,6 +46,7 @@ var inject = function () {
                     };
 
                     this.base = new (wrapper(baseClass, arguments))();
+                    _objectExtend(this, this.base);
                 };
             }
             ctor.apply(this, _params);
