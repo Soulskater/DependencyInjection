@@ -14,7 +14,7 @@ var registerNamespace = function (namespace, owner) {
     }
 
     function ensureObject(name, parent) {
-        if (!parent.hasOwnProperty(name)) {
+        if (!parent.hasOwnProperty(name) || !parent[name]) {
             parent[name] = {};
         }
         return parent[name];
