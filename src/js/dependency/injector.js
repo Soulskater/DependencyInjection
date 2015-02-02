@@ -64,8 +64,14 @@ var inject = function () {
         return _class;
     };
 
+    var _objectFactory = function (ctor) {
+
+        return ctor.apply(this, _params);
+    };
+
     return {
         base: _baseFactory,
-        class: _classFactory
+        class: _classFactory,
+        singleton: _objectFactory
     };
 };
